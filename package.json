@@ -1,0 +1,259 @@
+{
+  "name": "vscode-multipane-explorer",
+  "displayName": "VSCode Multipane Explorer",
+  "description": "A multipane explorer that supports File System, Kubernetes Container (Pod) File System, Zip File System, (S)FTP File System.",
+  "icon": "images/icon.png",
+  "version": "0.0.15",
+  "preview": true,
+  "license": "SEE LICENCE IN LICENSE",
+  "publisher": "sandipchitale",
+  "author": {
+    "name": "Sandip Chitale"
+  },
+  "maintainers": [
+    "Sandip Chitale <sandipchitale@gmail.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sandipchitale/vscode-multipane-explorer"
+  },
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "galleryBanner": {
+		"color": "#341114",
+		"theme": "dark"
+	},
+  "categories": [
+    "Other"
+  ],
+  "extensionDependencies": [
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "sandipchitale.kubernetes-file-system-explorer",
+    "ms-azuretools.vscode-docker"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "panel": [
+        {
+          "id": "multipaneexplorer",
+          "title": "Multipane Explorer",
+          "icon": "$(split-horizontal)"
+        }
+      ]
+    },
+    "views": {
+      "multipaneexplorer": [
+        {
+          "id": "k8scontainerfileexplorerA",
+          "name": "☸️ Filesystem Explorer A",
+          "icon": "$(layout-sidebar-left)"
+        },
+        {
+          "id": "k8scontainerfileexplorerB",
+          "name": "☸️ Filesystem Explorer B",
+          "icon": "$(layout-sidebar-right)"
+        },
+        {
+          "id": "dockercontainerfileexplorerA",
+          "name": "🐳 Filesystem Explorer A",
+          "icon": "$(layout-sidebar-left)"
+        },
+        {
+          "id": "dockercontainerfileexplorerB",
+          "name": "🐳 Filesystem Explorer B",
+          "icon": "$(layout-sidebar-right)"
+        },
+        {
+          "id": "fileexplorerA",
+          "name": "📂 Filesystem Explorer A",
+          "icon": "$(layout-sidebar-left)"
+        },
+        {
+          "id": "fileexplorerB",
+          "name": "📂 Filesystem Explorer B",
+          "icon": "$(layout-sidebar-right)"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "k8s.pod.container.filesystem-explorer",
+        "title": "Filesystem Explorer",
+        "icon": "${folder}",
+        "category": "Kubernetes"
+      },
+      {
+        "command": "k8s.pod.container.filesystem-explorer-select-container",
+        "title": "Filesystem Explorer for Selected Container",
+        "icon": "${folder}",
+        "category": "Kubernetes"
+      },
+      {
+        "command": "docker.container.filesystem-explorer",
+        "title": "Filesystem Explorer",
+        "icon": "${folder}",
+        "category": "Docker"
+      },
+      {
+        "command": "k8scontainerfileexplorer.ls-al",
+        "title": "ls -al",
+        "category": "Kubernetes"
+      },
+      {
+        "command": "k8scontainerfileexplorer.view",
+        "title": "View File",
+        "category": "Kubernetes"
+      },
+      {
+        "command": "k8scontainerfileexplorer.copy-from",
+        "title": "Copy from",
+        "category": "Kubernetes"
+      },
+      {
+        "command": "k8scontainerfileexplorer.copy-to-from-folder",
+        "title": "Copy to (from folder)",
+        "category": "Kubernetes"
+      },
+      {
+        "command": "k8scontainerfileexplorer.copy-to-from-file",
+        "title": "Copy to (from file)",
+        "category": "Kubernetes"
+      },
+      {
+        "command": "k8scontainerfileexplorerA.trash",
+        "title": "Clear",
+        "icon": "$(trash)",
+        "category": "Kubernetes"
+      },
+      {
+        "command": "k8scontainerfileexplorerB.trash",
+        "title": "Clear",
+        "icon": "$(trash)",
+        "category": "Kubernetes"
+      },
+      {
+        "command": "dockercontainerfileexplorer.ls-al",
+        "title": "ls -al",
+        "category": "Docker"
+      },
+      {
+        "command": "dockercontainerfileexplorer.view",
+        "title": "View File",
+        "category": "Docker"
+      },
+      {
+        "command": "dockercontainerfileexplorerA.trash",
+        "title": "Clear",
+        "icon": "$(trash)",
+        "category": "Docker"
+      },
+      {
+        "command": "dockercontainerfileexplorerB.trash",
+        "title": "Clear",
+        "icon": "$(trash)",
+        "category": "Docker"
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "dockercontainerfileexplorerA.trash",
+          "when": "view ==dockercontainerfileexplorerA",
+          "group": "navigation"
+        },
+        {
+          "command": "dockercontainerfileexplorerB.trash",
+          "when": "view == dockercontainerfileexplorerB",
+          "group": "navigation"
+        },
+        {
+          "command": "k8scontainerfileexplorerA.trash",
+          "when": "view == k8scontainerfileexplorerA",
+          "group": "navigation"
+        },
+        {
+          "command": "k8scontainerfileexplorerB.trash",
+          "when": "view == k8scontainerfileexplorerB",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "k8s.pod.container.filesystem-explorer-select-container",
+          "when": "view == extension.vsKubernetesExplorer && viewItem =~ /vsKubernetes\\.resource\\.pod/i"
+        },
+        {
+          "command": "k8s.pod.container.filesystem-explorer",
+          "when": "view == extension.vsKubernetesExplorer && viewItem =~ /containernode/i"
+        },
+        {
+          "command": "docker.container.filesystem-explorer",
+          "when": "view == dockerContainers && viewItem =~ /runningContainer/i"
+        },
+        {
+          "command": "dockercontainerfileexplorer.ls-al",
+          "when": "viewItem =~ /dockerexplorerfolder/i"
+        },
+        {
+          "command": "dockercontainerfileexplorer.view",
+          "when": "viewItem =~ /dockerexplorerfile/i"
+        },
+        {
+          "command": "k8scontainerfileexplorer.ls-al",
+          "when": "viewItem =~ /k8sexplorerfolder/i"
+        },
+        {
+          "command": "k8scontainerfileexplorer.copy-from",
+          "when": "viewItem =~ /k8sexplorerfolder/i"
+        },
+        {
+          "command": "k8scontainerfileexplorer.copy-to-from-folder",
+          "when": "viewItem =~ /k8sexplorerfolder/i"
+        },
+        {
+          "command": "k8scontainerfileexplorer.copy-to-from-file",
+          "when": "viewItem =~ /k8sexplorerfolder/i"
+        },
+        {
+          "command": "k8scontainerfileexplorer.view",
+          "when": "viewItem =~ /k8sexplorerfile/i"
+        },
+        {
+          "command": "k8scontainerfileexplorer.copy-from",
+          "when": "viewItem =~ /k8sexplorerfile/i"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "14.x",
+    "@types/rimraf": "^3.0.2",
+    "@types/vscode": "^1.74.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.27.0",
+    "glob": "^7.1.7",
+    "mocha": "^8.4.0",
+    "typescript": "^4.3.2",
+    "vscode-test": "^1.5.2"
+  },
+  "dependencies": {
+    "rimraf": "^3.0.2",
+    "vscode-kubernetes-tools-api": "^1.3.0"
+  }
+}
